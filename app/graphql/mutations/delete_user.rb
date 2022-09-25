@@ -7,7 +7,7 @@ module Mutations
       user = User.find(id)
       if user.destroy
         {
-          id: id,
+          user: user,
         }
       else
         raise GraphQL::ExecutionError, user.errors.full_messages.join(", ")
