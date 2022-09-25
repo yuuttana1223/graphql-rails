@@ -6,9 +6,13 @@ module Mutations
 
     # nilを指定しないとエラーになる
     def resolve(name:, email: nil)
-      user = User.create!(name: name, email: email)
-      # 成功したときに変える値で、クライアント側からほしいargumentを指定する
-      { user: user }
+      user = User.new(name: name, email: email)
+      if user.save
+        # 成功したときに変える値で、クライアント側からほしいargumentを指定する
+        { user: user }
+      else
+        raise GraphQL::ExecutionError, user.errors.full_messages.join(", ")
+      end
     end
   end
 end

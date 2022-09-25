@@ -6,8 +6,12 @@ module Mutations
     argument :email, String, required: false
 
     def resolve(id:, name:, email: nil)
-      user = User.update!(id, name: name, email: email)
-      { user: user }
+      user = user.find(id)
+      if user.update(name: name, email: email)
+        { user: user }
+      else
+        raise GraphQL::ExecutionError, user.errors.full_messages.join(", ")
+      end
     end
   end
 end
