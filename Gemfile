@@ -74,3 +74,5 @@ group :test do
 end
 
 gem "graphql"
+
+gem "graphql-batch", "~> 0.5.1"
